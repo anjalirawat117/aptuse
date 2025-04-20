@@ -12,11 +12,9 @@ function AppbarDesktop() {
     'STARTUPS',
     'WEB HOSTING',
   ];
-
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#0a0a0a' }}>
-      <Toolbar sx={{ px: 2, height: '100px' }}>
-
+    <AppBar position="static" sx={{ backgroundColor: '#0a0a0a', p: 0, m: 0 }}>
+      <Toolbar sx={{ px: 0, height: '100px' }}>
         {/* Logo Section */}
         <Box
           component="a"
@@ -26,16 +24,13 @@ function AppbarDesktop() {
             alignItems: 'center',
             textDecoration: 'none',
             mr: 2,
-          }}
-        >
+          }}>
           <Box
             component="img"
             src="/assets/Logo/logo.png"
             alt="AptUse"
-            sx={{ height: 60 }}
-          />
+            sx={{ height: 60 }}/>
         </Box>
-
         {/* Categories */}
         <Box
           sx={{
@@ -44,8 +39,7 @@ function AppbarDesktop() {
             justifyContent: 'center',
             flex: 1,
             mr: 0.5,
-          }}
-        >
+          }}>
           {categories.map((category) => (
             <Box
               key={category}
@@ -61,15 +55,13 @@ function AppbarDesktop() {
                   backgroundColor: 'orange',
                   color: '#000',
                 },
-                px: 2, // Keep your existing spacing
+                px: 2,
                 py: 0.5,
-              }}
-            >
+              }}>
               {category}
             </Box>
           ))}
         </Box>
-
         {/* Search Icon */}
         <IconButton edge="end" href="/search" aria-label="Search">
           <SearchIcon sx={{ color: '#fff' }} />

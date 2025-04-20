@@ -13,14 +13,20 @@ function App() {
   useEffect(() => {
     document.title = "AptUse site";
   }, []);
- 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ background: '#000', m: 0, p: 0 }}>
+      <Box sx={{ background: '#000', m: 0, p: 0, width: '100%', overflowX: 'hidden', position: 'relative' }}>
         <UIProvider>
           <Appbar/>
           <AppDrawer/>
-          <Box sx={{ background: '#fff', px: 0, py: 0, mt: 1 }}>
+          <Box
+            sx={{
+              p: 0,
+              m: 0,
+              width: '100%',
+              backgroundColor: '#fff',
+              borderTop: '1px solid #ddd',
+            }}>
             <ImageSlider/>
           </Box>
           <NewsSection/>

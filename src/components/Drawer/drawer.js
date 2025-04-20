@@ -37,7 +37,6 @@ const DrawerHeader = styled(Box)({
   
 export default function AppDrawer() {
     const { drawerOpen, setDrawerOpen } = useUIContext();
-  
     return (
       <StyledDrawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         {/* Top section: Logo + close button */}
@@ -62,12 +61,12 @@ export default function AppDrawer() {
                 {categories.map((text, index) => (
                     <ListItemButton key={index} sx={{ px: 3 }}>
                         <ListItemText
-                        primary={text}
-                        primaryTypographyProps={{
-                            fontWeight: 600,
-                            fontSize: "1rem",
-                            letterSpacing: "0.3px",
-                        }}/>
+                            primary={text}
+                            primaryTypographyProps={{
+                                fontWeight: 600,
+                                fontSize: "1rem",
+                                letterSpacing: "0.3px",
+                            }}/>
                     </ListItemButton>
                 ))}
             </List>
@@ -75,10 +74,10 @@ export default function AppDrawer() {
         {/* Footer copyright */}
         <Box sx={{ textAlign: "center", px: 2, py: 2 }}>
             <Typography
-            variant="body2"
-            fontSize="0.75rem"
-            sx={{ color: "gray" }}>
-                Copyright © 2023 - Aptuse. All Right Reserved.
+                variant="body2"
+                fontSize="0.75rem"
+                sx={{ color: "gray" }}>
+                    Copyright © 2023 - Aptuse. All Right Reserved.
             </Typography>
         </Box>
       </StyledDrawer>

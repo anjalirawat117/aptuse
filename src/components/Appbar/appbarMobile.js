@@ -6,7 +6,6 @@ import { useUIContext } from "../../context/Ui/ui";
 
 export default function AppbarMobile() {
     const {setDrawerOpen} = useUIContext();
-
     return (
         <AppbarContainer sx={{ justifyContent: 'space-between' }}>
             {/* Menu */}

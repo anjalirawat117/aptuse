@@ -32,7 +32,6 @@ const theme = createTheme({
             main: Colors.secondary
         }
     },
-
     components: {
         MuiButton: {
             defaultProps: {
