@@ -8,6 +8,7 @@ import { UIProvider } from "./context/Ui/ui";
 import ImageSlider from "./components/Slider/slider";
 import Footer from "./components/Footer/footer";
 import NewsSection from "./components/NewsSection/newssection";
+import LatestNews from "./components/LatestNews/latestnews";
 
 function App() {
   useEffect(() => {
@@ -30,6 +31,7 @@ function App() {
             <ImageSlider/>
           </Box>
           <NewsSection/>
+          <LatestNews/>
           <Footer/>
         </UIProvider>
       </Box>

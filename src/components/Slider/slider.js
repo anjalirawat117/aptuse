@@ -133,9 +133,9 @@ const ImageSlider = () => {
                 md: '0 0 25%',
               },
               height: {
-                xs: '45vh',
-                sm: '55vh',
-                md: 'calc(70vh - 100px)',
+                xs: '70vh',
+                sm: '80vh',
+                md: 'calc(100vh - 100px)',
               },
               overflow: 'hidden',
               flexShrink: 0,
