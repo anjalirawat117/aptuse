@@ -23,7 +23,7 @@ const slides = [
     title: "Maximizing Your Productivity with the Right Software: Tips and Tricks",
     subtitle: "In today’s fast-paced and increasingly digital world, maximizing productivity is essential for success. Whether you’re an entrepreneur, a freelancer, or …",
     image: "/assets/Newssection/image2.webp",
-    tag: "SOFTWARE",
+    category: "SOFTWARE",
     sideNews: [
       "10 Essential Software Tools for Small Business Owners to Streamline Operations",
       "The Future of Software: Predictions for the Next Decade",
@@ -35,7 +35,7 @@ const slides = [
     title: "Revolutionizing the Future: How Software is Changing the World",
     subtitle: "The world we live in today is vastly different from what it was just a few decades ago. With the...",
     image: "/assets/Newssection/image3.webp",
-    tag: "SOFTWARE",
+    category: "SOFTWARE",
     sideNews: [
       "Revolutionizing the Future: How Software is Changing the World",
     ],
@@ -118,8 +118,8 @@ const NewsSection = () => {
                     cursor: "pointer",
                     zIndex: 1
                   }}
-                  onClick={() => console.log("Tag clicked:", currentSlide.tag)}>
-                  {currentSlide.tag}
+                  onClick={() => console.log("Category clicked:", currentSlide.category)}>
+                  {currentSlide.category}
                 </Typography>
               </Box>
               <Typography

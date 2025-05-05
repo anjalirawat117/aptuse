@@ -2,52 +2,54 @@ import React, { useRef } from 'react';
 import { Box, Typography, IconButton } from '@mui/material';
 import { ArrowBackIosNew, ArrowForwardIos } from '@mui/icons-material';
 import { Colors } from '../../styles/Theme/theme';
+import { useNavigate } from 'react-router-dom';
 
 const articles = [
   {
     title: 'Why Culture is Key to Building a Strong and Sustainable Startup',
     image: '/assets/Slider/image1.webp',
-    tag: 'STARTUPS',
+    category: 'startups',
   },
   {
     title: 'The ABCs of Startup Funding: How to Secure Investment for Your Business',
     image: '/assets/Slider/image2.webp',
-    tag: 'STARTUPS',
+    category: 'startups',
   },
   {
     title: 'The Top 10 Mistakes to Avoid When Starting a New Business',
     image: '/assets/Slider/image3.webp',
-    tag: 'STARTUPS',
+    category: 'startups',
   },
   {
     title: '10 Essential Tips for Launching a Successful Startup in 2023',
     image: '/assets/Slider/image4.webp',
-    tag: 'STARTUPS',
+    category: 'startups',
   },
   {
     title: 'From Idea to Success: The Ultimate Guide to Starting a Profitable Startup',
     image: '/assets/Slider/image5.webp',
-    tag: 'STARTUPS',
+    category: 'startups',
   },
   {
     title: 'From Smart Homes to Wearable Tech: How Electronics are Revolutionizing Daily Life',
     image: '/assets/Slider/image6.webp',
-    tag: 'ELECTRONICS',
+    category: 'electronics',
   },
   {
     title: 'Eco-Friendly Electronics: How Technology is Moving Towards Sustainability and Conservation',
     image: '/assets/Slider/image7.webp',
-    tag: 'ELECTRONICS',
+    category: 'electronics',
   },
   {
     title: 'The Future of Electronics: Exploring the Latest Tech Innovations',
     image: '/assets/Slider/image8.webp',
-    tag: 'ELECTRONICS',
+    category: 'electronics',
   },
 ];
 
 const ImageSlider = () => {
   const scrollRef = useRef(null);
+  const navigate = useNavigate();
   const scroll = (direction) => {
     const container = scrollRef.current;
     if (container) {
@@ -69,8 +71,13 @@ const ImageSlider = () => {
     }
   };
   const handleClick = (article) => {
-    console.log('Clicked article:', article.title);
+    navigate(`/article/${article.category.toLowerCase()}/${article.title.replace(/\s+/g, '-').toLowerCase()}`, {
+      state: { article },
+    });
   };
+  const handleTagClick = (tag) => {
+    navigate(`/category/${tag.toLowerCase()}`);
+  };  
   return (
     <Box
       sx={{
@@ -168,7 +175,7 @@ const ImageSlider = () => {
                 border: 'none',
                 transition: 'filter 0.3s ease',
               }}/>
-            {/* Overlay with title/tag */}
+            {/* Overlay with title/category */}
             <Box
               className="image-overlay"
               sx={{
@@ -193,6 +200,10 @@ const ImageSlider = () => {
                 transition: 'background 0.3s ease',
               }}>
               <Box
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevents the image click handler from firing
+                  handleTagClick(article.category);
+                }}
                 sx={{
                   position: 'relative',
                   display: 'inline-block',
@@ -216,11 +227,15 @@ const ImageSlider = () => {
                     borderTop: `8px solid ${Colors.warning}`,
                   },
                 }}>
-                {article.tag}
+                {article.category}
               </Box>
               <Typography
                 variant="subtitle1"
                 fontWeight={700}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleClick(article);
+                }}
                 sx={{
                   fontSize: '1rem',
                   lineHeight: 1.3,

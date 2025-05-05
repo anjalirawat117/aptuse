@@ -2,6 +2,7 @@ import { Drawer, List, ListItemButton, ListItemText, Box, IconButton, Typography
 import { styled } from "@mui/system";
 import { useUIContext } from "../../context/Ui/ui";
 import CloseIcon from "@mui/icons-material/Close";
+import { Link as RouterLink } from 'react-router-dom';
 
 //category list
 const categories = [
@@ -43,8 +44,8 @@ export default function AppDrawer() {
         <Box>
             <DrawerHeader>
                 <Box
-                    component="a"
-                    href="/"
+                    component={RouterLink}
+                    to="/"
                     sx={{ textDecoration: "none", flexGrow: 1 }}>
                         <Box
                             component="img"
@@ -59,7 +60,12 @@ export default function AppDrawer() {
             {/* List of categories */}
             <List>
                 {categories.map((text, index) => (
-                    <ListItemButton key={index} sx={{ px: 3 }}>
+                    <ListItemButton
+                        key={index}
+                        component={RouterLink}
+                        to={`/category/${text.toLowerCase().replace(/\s+/g, '-')}`}
+                        onClick={() => setDrawerOpen(false)} // Close drawer after click
+                        sx={{ px: 3 }}>
                         <ListItemText
                             primary={text}
                             primaryTypographyProps={{

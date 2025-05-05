@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography, Card, CardMedia, Link } from '@mui/material';
+import { Link as RouterLink } from "react-router-dom";
 
 const Technology = () => {
   const articles = [
@@ -45,8 +46,8 @@ const Technology = () => {
             {articles.slice(startIndex, startIndex + 2).map((article, index) => (
               <Card
                 key={index}
-                component="a"
-                href={`/technology/article${startIndex + index + 1}`}
+                component={RouterLink}
+                to={`/technology/article${startIndex + index + 1}`}
                 sx={{
                   flex: 1,
                   borderRadius: 0,
@@ -68,7 +69,7 @@ const Technology = () => {
                   component="img"
                   image={article.image}
                   alt={article.title}
-                  sx={{ height: 300, objectFit: 'cover' }}/>
+                  sx={{ height: 350, objectFit: 'cover' }}/>
                 {/* Hover Overlay */}
                 <Box
                   className="hover-overlay"

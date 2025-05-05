@@ -1,6 +1,8 @@
 import React from 'react';
 import { AppBar, Toolbar, Box, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link } from '@mui/material';
 
 function AppbarDesktop() {
   const categories = [
@@ -17,8 +19,8 @@ function AppbarDesktop() {
       <Toolbar sx={{ px: 0, height: '100px' }}>
         {/* Logo Section */}
         <Box
-          component="a"
-          href="/"
+          component={RouterLink}
+          to="/"
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -41,10 +43,10 @@ function AppbarDesktop() {
             mr: 0.5,
           }}>
           {categories.map((category) => (
-            <Box
+            <Link
               key={category}
-              component="a"
-              href={`/category/${category.toLowerCase().replace(' ', '-')}`}
+              component={RouterLink}
+              to={`/category/${category.toLowerCase().replace(' ', '-')}`}
               sx={{
                 color: '#fff',
                 fontWeight: 600,
@@ -59,11 +61,11 @@ function AppbarDesktop() {
                 py: 0.5,
               }}>
               {category}
-            </Box>
+            </Link>
           ))}
         </Box>
         {/* Search Icon */}
-        <IconButton edge="end" href="/search" aria-label="Search">
+        <IconButton edge="end" component={RouterLink} to="/search" aria-label="Search">
           <SearchIcon sx={{ color: '#fff' }} />
         </IconButton>
       </Toolbar>

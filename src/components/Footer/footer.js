@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography, Link } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -61,7 +62,10 @@ const Footer = () => {
                 mb: 2,
               }}>
               {/* Image with yellowish blur effect */}
-              <Box
+              <Link
+                component={RouterLink}
+                to={item.link}
+                underline="none"
                 sx={{
                   width: 60,
                   height: 60,
@@ -70,6 +74,7 @@ const Footer = () => {
                   borderRadius: 1,
                   overflow: "hidden",
                   flexShrink: 0,
+                  display: "block",
                   "& img": {
                     width: "100%",
                     height: "100%",
@@ -92,10 +97,11 @@ const Footer = () => {
                   },
                 }}>
                 <img src={item.img} alt={item.title} />
-              </Box>
+              </Link>
               {/* Text link - only turns orange on its own hover */}
               <Link
-                href={item.link}
+                component={RouterLink}
+                to={item.link}
                 color="inherit"
                 underline="none"
                 sx={{
@@ -122,7 +128,8 @@ const Footer = () => {
           ].map((item, index) => (
             <Link
               key={index}
-              href={item.href}
+              component={RouterLink}
+              to={item.href}
               underline="none"
               color="inherit"
               sx={{
@@ -154,7 +161,8 @@ const Footer = () => {
           {["Privacy Policy", "Affiliate Policy", "Cookie Policy", "Sitemap"].map((text, index) => (
             <Link
               key={index}
-              href={`/${text.toLowerCase().replace(/\s+/g, "-")}`}
+              component={RouterLink}
+              to={`/${text.toLowerCase().replace(/\s+/g, "-")}`}
               underline="none"
               color="inherit"
               sx={{

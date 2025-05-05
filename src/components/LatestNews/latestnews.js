@@ -9,6 +9,7 @@ import {
   CardContent,
   Chip,
 } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 const newsData = [
   {
@@ -104,7 +105,7 @@ export default function LatestNews() {
           mb: 4,
           gap: 2,
         }}>
-        <a href="/news" style={{ textDecoration: 'none', color: 'inherit' }}>
+        <RouterLink to="/news" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Typography
             variant="h6"
             sx={{
@@ -113,15 +114,15 @@ export default function LatestNews() {
             }}>
             LATEST NEWS
           </Typography>
-        </a>
+        </RouterLink>
         <Box sx={{ flexGrow: 1, height: 2, backgroundColor: '#ddd' }} />
       </Box>
       <Grid container spacing={3}>
         {newsData.slice(0, visibleCount).map((item, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <Box
-              component="a"
-              href={`/news/${index}`}
+              component={RouterLink}
+              to={`/news/${index}`}
               sx={{
                 position: 'relative',
                 display: 'block',
@@ -195,8 +196,8 @@ export default function LatestNews() {
                         mb: 1,
                         lineHeight: 1.2,
                       }}
-                      component="a"
-                      href={`/category/${item.category.toLowerCase().replace(/\s/g, '-')}`}/>
+                      component={RouterLink}
+                      to={`/category/${item.category.toLowerCase().replace(/\s/g, '-')}`}/>
                     <Typography
                       variant="subtitle1"
                       fontWeight={600}

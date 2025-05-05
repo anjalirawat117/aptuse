@@ -7,6 +7,7 @@ import {
   Link,
 } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { Link as RouterLink } from "react-router-dom";
 
 const architectureArticles = [
   {
@@ -43,7 +44,7 @@ export default function ArchitectureNews() {
   return (
     <Box sx={{ bgcolor: 'white', px: { xs: 2, md: 4 }, py: 4 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-        <Link href="/architecture-news" underline="none" color="inherit">
+        <Link component={RouterLink} to="/architecture-news" underline="none" color="inherit">
           <Typography
             variant="h6"
             sx={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>
@@ -55,7 +56,7 @@ export default function ArchitectureNews() {
       {/* Top Large Cards */}
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3, mb: 4 }}>
         {architectureArticles.slice(0, 2).map((article, i) => (
-          <Link key={i} href={article.link} underline="none" sx={{ flex: 1 }}>
+          <Link key={i} component={RouterLink} to={article.link} underline="none" sx={{ flex: 1 }}>
             <Card
               sx={{
                 position: 'relative',
@@ -124,7 +125,7 @@ export default function ArchitectureNews() {
         }}>
         {architectureArticles.slice(2).map((article, i) => (
           <Box key={i} sx={{ flex: 1 }}>
-            <Link href={article.link} underline="none" color="inherit">
+            <Link component={RouterLink} to={article.link} underline="none" color="inherit">
               <Box
                 sx={{
                   position: 'relative',
@@ -196,7 +197,7 @@ export default function ArchitectureNews() {
                       fontFamily: 'Roboto, sans-serif',
                       color: '#222',
                     }}>
-                    <Link href={point.link} underline="none" color="inherit">
+                    <Link component={RouterLink} to={point.link} underline="none" color="inherit">
                       {point.text}
                     </Link>
                   </Typography>
@@ -216,7 +217,7 @@ export default function ArchitectureNews() {
         }}>
         {/* Images + titles first */}
         {architectureArticles.slice(2).map((article, i) => (
-          <Link key={i} href={article.link} underline="none" color="inherit">
+          <Link key={i} component={RouterLink} to={article.link} underline="none" color="inherit">
             <Box
               sx={{
                 position: 'relative',
@@ -289,7 +290,7 @@ export default function ArchitectureNews() {
                     fontFamily: 'Roboto, sans-serif',
                     color: '#222',
                   }}>
-                  <Link href={point.link} underline="none" color="inherit">
+                  <Link component={RouterLink} to={point.link} underline="none" color="inherit">
                     {point.text}
                   </Link>
                 </Typography>
