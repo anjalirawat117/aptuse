@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Box, Typography, CardMedia, Button } from '@mui/material';
 import SidebarNews from '../components/SidebarNews/sidebarnews';
@@ -7,8 +7,10 @@ import { Facebook, Twitter, Google, Pinterest, Add } from '@mui/icons-material';
 
 export default function ArticlePage() {
   const { state } = useLocation();
-  const { article } = state || {};
   const navigate = useNavigate();
+  const { article } = state || {};
+  const [activeTab, setActiveTab] = useState('RELATED ARTICLES');
+  const [currentPage, setCurrentPage] = useState(0);
   if (!article) {
     return (
       <Typography sx={{ p: 4 }} variant="h6">
@@ -20,6 +22,16 @@ export default function ArticlePage() {
   const index = categoryArticles.findIndex((a) => a.title === article.title);
   const prevArticle = categoryArticles[index - 1];
   const nextArticle = categoryArticles[index + 1];
+  const sharedArticles = categoryArticles.filter(a => a.title !== article.title).slice(0, 4);
+  const authorArticles = allCategoryArticle[article.category.toLowerCase()].slice(0, 49);
+  const getArticlesForTab = (tab) => {
+    if (tab === 'MORE FROM AUTHOR') return authorArticles;
+    return sharedArticles;
+  };
+  const pageSize = 3;
+  const tabArticles = getArticlesForTab(activeTab);
+  const totalPages = Math.ceil(tabArticles.length / pageSize);
+  const visibleArticles = tabArticles.slice(currentPage * pageSize, currentPage * pageSize + pageSize);
   return (
     <Box sx={{ width: '100%', maxWidth: '1400px', mx: 'auto', px: { xs: 2, md: 4 }, py: 6 }}>
       <Box sx={{ display: { xs: 'block', md: 'flex' }, gap: 4 }}>
@@ -78,7 +90,7 @@ export default function ArticlePage() {
                 px: 2,
                 '&:hover': { bgcolor: '#0084b4' },
               }}>
-                Share on Twitter
+              Share on Twitter
             </Button>
             <Button
               variant="contained"
@@ -168,7 +180,7 @@ export default function ArticlePage() {
                 px: 2,
                 '&:hover': { bgcolor: '#0084b4' },
               }}>
-                Share on Twitter
+              Share on Twitter
             </Button>
             <Button
               variant="contained"
@@ -257,12 +269,16 @@ export default function ArticlePage() {
           </Box>
           {/* Related Articles */}
           <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
-            {['RELATED ARTICLES', 'MORE FROM AUTHOR', 'MORE FROM CATEGORY'].map((label, idx) => (
+            {['RELATED ARTICLES', 'MORE FROM AUTHOR', 'MORE FROM CATEGORY'].map((label) => (
               <Box
-                key={idx}
+                key={label}
+                onClick={() => {
+                  setActiveTab(label);
+                  setCurrentPage(0); // reset on tab switch
+                }}
                 sx={{
-                  backgroundColor: label === 'RELATED ARTICLES' ? '#000' : '#ccc',
-                  color: label === 'RELATED ARTICLES' ? '#fff' : '#fff',
+                  backgroundColor: activeTab === label ? '#000' : '#ccc',
+                  color: '#fff',
                   px: 2,
                   py: 0.75,
                   fontSize: '0.9rem',
@@ -272,7 +288,7 @@ export default function ArticlePage() {
                   cursor: 'pointer',
                   transition: 'all 0.2s ease-in-out',
                   '&:hover': {
-                    backgroundColor: label === 'RELATED ARTICLES' ? '#000' : '#aaa',
+                    backgroundColor: activeTab === label ? '#000' : '#aaa',
                   },
                 }}>
                 {label}
@@ -280,24 +296,90 @@ export default function ArticlePage() {
             ))}
           </Box>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-            {categoryArticles
-              .filter(a => a.title !== article.title)
-              .slice(0, 3)
-              .map((related) => (
-                <Box
-                  key={related.id}
-                  onClick={() => navigate(`/article/${related.category.toLowerCase()}/${related.id}`, { state: { article: related } })}
-                  sx={{ width: 'calc(33% - 10px)', cursor: 'pointer' }}>
-                  <CardMedia
-                    component="img"
-                    image={related.image}
-                    alt={related.title}
-                    sx={{ borderRadius: 1, mb: 1, height: 160, objectFit: 'cover' }}/>
-                  <Typography variant="body2" fontWeight="bold">
-                    {related.title}
-                  </Typography>
-                </Box>
-              ))}
+            {visibleArticles.map((related) => (
+              <Box
+                key={related.id}
+                onClick={() => navigate(`/article/${related.category.toLowerCase()}/${related.id}`, { state: { article: related } })}
+                sx={{ width: 'calc(33% - 10px)', cursor: 'pointer' }}>
+                <CardMedia
+                  component="img"
+                  image={related.image}
+                  alt={related.title}
+                  sx={{
+                    borderRadius: 1,
+                    mb: 1,
+                    height: 160,
+                    objectFit: 'cover',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      filter: 'brightness(1.1)',
+                      backgroundColor: 'rgba(234, 192, 55, 0.15)',
+                    },
+                  }}/>
+                <Typography
+                  variant="body2"
+                  fontWeight="bold"
+                  sx={{
+                    transition: 'color 0.3s ease',
+                    '&:hover': {
+                      color: '#f7941d',
+                    },            
+                  }}>
+                  {related.title}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+          {/* ⬅️ PREV / NEXT ➡️ */}
+          <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
+            <Box
+              onClick={() => currentPage > 0 && setCurrentPage((prev) => prev - 1)}
+              sx={{
+                border: '1px solid',
+                borderColor: currentPage > 0 ? '#000' : '#ccc',
+                color: currentPage > 0 ? '#000' : '#ccc',
+                px: 2.5,
+                py: 1,
+                fontSize: '0.9rem',
+                fontWeight: 600,
+                borderRadius: '6px',
+                cursor: currentPage > 0 ? 'pointer' : 'default',
+                transition: 'all 0.2s ease-in-out',
+                backgroundColor: '#fff',
+                '&:hover': currentPage > 0
+                  ? {
+                    backgroundColor: '#000',
+                    color: '#fff',
+                    borderColor: '#000',
+                  }
+                : {},
+              }}>
+              ← PREV
+            </Box>
+            <Box
+              onClick={() => currentPage < totalPages - 1 && setCurrentPage((prev) => prev + 1)}
+              sx={{
+                border: '1px solid',
+                borderColor: currentPage < totalPages - 1 ? '#000' : '#ccc',
+                color: currentPage < totalPages - 1 ? '#000' : '#ccc',
+                px: 2.5,
+                py: 1,
+                fontSize: '0.9rem',
+                fontWeight: 600,
+                borderRadius: '6px',
+                cursor: currentPage < totalPages - 1 ? 'pointer' : 'default',
+                transition: 'all 0.2s ease-in-out',
+                backgroundColor: '#fff',
+                '&:hover': currentPage < totalPages - 1
+                  ? {
+                    backgroundColor: '#000',
+                    color: '#fff',
+                    borderColor: '#000',
+                  }
+                : {},
+              }}>
+              NEXT →
+            </Box>
           </Box>
           {/* Leave a Reply */}
           <Typography variant="h6" sx={{ mt: 6, mb: 2, fontWeight: 'bold' }}>
@@ -333,7 +415,7 @@ export default function ArticlePage() {
                 SEND
               </button>
             </Box>
-         </Box>
+          </Box>
         </Box>
         {/* Sidebar - 2/6 */}
         <Box sx={{ flex: 2 }}>

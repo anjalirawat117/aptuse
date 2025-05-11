@@ -1,17 +1,20 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
-export default function NewsDetailsPage() {
-  const { id } = useParams();
+const NewsDetailsPage = () => {
+  const { state } = useLocation();
+  const article = state?.article;
+
+  if (!article) {
+    return <div>Article not found</div>;
+  }
+
   return (
-    <Box sx={{ px: { xs: 2, md: 4 }, py: 6, maxWidth: 1000, mx: 'auto' }}>
-      <Typography variant="h5" gutterBottom>
-        News Article ID: {id}
-      </Typography>
-      <Typography>
-        This is the placeholder page for news article #{id}. You can fetch or display full content here.
-      </Typography>
-    </Box>
+    <div>
+      <h2>{article.title}</h2>
+      <img src={article.image} alt={article.title} />
+      <p>Category: {article.category}</p>
+    </div>
   );
-}
+};
+
+export default NewsDetailsPage;

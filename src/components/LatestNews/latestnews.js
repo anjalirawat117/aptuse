@@ -5,8 +5,8 @@ import {
   Typography,
   Button,
   Card,
-  CardMedia,
   CardContent,
+  CardMedia,
   Chip,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
@@ -18,10 +18,10 @@ const newsData = [
     category: "KITCHEN APPLIANCES",
   },
   {
-  title: "Beyond the Basics: Innovative Home Appliances to Simplify Your Life",
-  image: "/assets/LatestNews/image2.webp",
-  category: "HOME APPLIANCES",
-  },    
+    title: "Beyond the Basics: Innovative Home Appliances to Simplify Your Life",
+    image: "/assets/LatestNews/image2.webp",
+    category: "HOME APPLIANCES",
+  },
   {
     title: "The Ultimate Guide to Choosing the Right Beauty Tools for Your Skin Type",
     image: "/assets/LatestNews/image3.png",
@@ -96,125 +96,154 @@ export default function LatestNews() {
     setVisibleCount((prev) => prev + 6);
   };
   const isAllLoaded = visibleCount >= newsData.length;
+
   return (
     <Box sx={{ px: 3, py: 5, bgcolor: '#fff' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          mb: 4,
-          gap: 2,
-        }}>
+      {/* Title */}
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4, gap: 2 }}>
         <RouterLink to="/news" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 'bold',
-              whiteSpace: 'nowrap',
-            }}>
+          <Typography variant="h6" sx={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>
             LATEST NEWS
           </Typography>
         </RouterLink>
         <Box sx={{ flexGrow: 1, height: 2, backgroundColor: '#ddd' }} />
       </Box>
-      <Grid container spacing={3}>
-        {newsData.slice(0, visibleCount).map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <Box
-              component={RouterLink}
-              to={`/news/${index}`}
+
+      {/* News Cards */}
+      <Grid container spacing={3} justifyContent="space-between">
+  {newsData.slice(0, visibleCount).map((item, index) => (
+    <Grid
+      item
+      key={index}
+      sx={{
+        flexBasis: '30%',
+        maxWidth: '30%',
+        '@media (max-width: 900px)': {
+          flexBasis: '48%',
+          maxWidth: '48%',
+        },
+        '@media (max-width: 600px)': {
+          flexBasis: '100%',
+          maxWidth: '100%',
+        },
+      }}
+    >
+      <Box
+        component={RouterLink}
+        to={`/news/${index}`}
+        state={{ article: item }}
+        sx={{
+          position: 'relative',
+          display: 'block',
+          textDecoration: 'none',
+          height: '100%',
+          '&:hover .yellowOverlay': {
+            opacity: 1,
+          },
+        }}
+      >
+        <Card
+          sx={{
+            height: '100%',
+            overflow: 'hidden',
+            position: 'relative',
+            boxShadow: 'none',
+            borderRadius: 0,
+          }}
+        >
+          <Box sx={{ position: 'relative', height: 380 }}>
+            <CardMedia
+              component="img"
+              image={item.image}
+              alt={item.title}
               sx={{
-                position: 'relative',
-                display: 'block',
+                width: '100%',
                 height: '100%',
-                textDecoration: 'none',
-                '&:hover .yellowOverlay': {
-                  opacity: 1,
-                },
-              }}>
-              <Card
-                sx={{
-                  height: '100%',
-                  overflow: 'hidden',
-                  position: 'relative',
-                  boxShadow: 3,
-                }}>
-                <Box sx={{ position: 'relative' }}>
-                  <CardMedia
-                    component="img"
-                    height="240"
-                    image={item.image}
-                    alt={item.title}
-                    sx={{ width: '100%', objectFit: 'cover' }}/>
-                  {/* Yellow Hover Effect */}
-                  <Box
-                    className="yellowOverlay"
-                    sx={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: 'rgba(239, 231, 153, 0.25)', // Light yellow
-                      opacity: 0,
-                      transition: 'opacity 0.3s ease-in-out',
-                      zIndex: 1,
-                    }}/>
-                  {/* Black Gradient at bottom for text readability */}
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '40%',
-                      background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)',
-                      zIndex: 2,
-                    }}/>
-                  <CardContent
-                    sx={{
-                      position: 'absolute',
-                      bottom: 16,
-                      left: 16,
-                      right: 16,
-                      zIndex: 3,
-                      color: '#fff',
-                      p: 0,
-                    }}>
-                    <Chip
-                      label={item.category}
-                      size="small"
-                      sx={{
-                        backgroundColor: '#f57c00',
-                        color: '#fff',
-                        fontWeight: 500,
-                        fontSize: '0.625rem',
-                        borderRadius: '4px',
-                        px: 1.5,
-                        py: 0.25,
-                        height: '22px',
-                        mb: 1,
-                        lineHeight: 1.2,
-                      }}
-                      component={RouterLink}
-                      to={`/category/${item.category.toLowerCase().replace(/\s/g, '-')}`}/>
-                    <Typography
-                      variant="subtitle1"
-                      fontWeight={600}
-                      sx={{
-                        fontSize: '1rem',
-                        lineHeight: 1.4,
-                        color: '#fff',
-                      }}>
-                      {item.title}
-                    </Typography>
-                  </CardContent>
-                </Box>
-              </Card>
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
+                objectFit: 'cover',
+              }}
+            />
+            {/* Yellow Hover Overlay */}
+            <Box
+              className="yellowOverlay"
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(239, 231, 153, 0.25)',
+                opacity: 0,
+                transition: 'opacity 0.3s ease-in-out',
+                zIndex: 1,
+              }}
+            />
+            {/* Bottom Gradient Overlay */}
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                width: '100%',
+                height: '40%',
+                background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)',
+                zIndex: 2,
+              }}
+            />
+            <CardContent
+  sx={{
+    position: 'absolute',
+    bottom: 16,
+    left: 16,
+    zIndex: 3,
+    color: '#fff',
+    p: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start', // left-align
+  }}
+>
+  <Chip
+    label={item.category}
+    size="small"
+    component={RouterLink}
+    to={`/category/${item.category.toLowerCase().replace(/\s/g, '-')}`}
+    sx={{
+      backgroundColor: '#f57c00',
+      color: '#fff',
+      fontWeight: 500,
+      fontSize: '0.625rem',
+      borderRadius: '4px',
+      px: 1.5,
+      py: 0.25,
+      height: '22px',
+      mb: 1,
+      lineHeight: 1.2,
+      cursor: 'pointer',
+      '&:hover': {
+        backgroundColor: '#f57c00', // disables hover effect
+      },
+    }}
+  />
+  <Typography
+    variant="subtitle1"
+    fontWeight={600}
+    sx={{
+      fontSize: '1rem',
+      lineHeight: 1.4,
+      color: '#fff',
+    }}
+  >
+    {item.title}
+  </Typography>
+</CardContent>
+
+          </Box>
+        </Card>
+      </Box>
+    </Grid>
+  ))}
+</Grid>
+      {/* Load More Button */}
       <Box textAlign="center" mt={5}>
         <Button
           variant="contained"
@@ -226,7 +255,8 @@ export default function LatestNews() {
             px: 4,
             py: 1.5,
             fontWeight: 600,
-          }}>
+          }}
+        >
           {isAllLoaded ? 'No More Posts' : 'Load More'}
         </Button>
       </Box>
